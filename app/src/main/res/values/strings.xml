@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ChatApp</string>
+    <string name="new_to_our_app">New to our app?</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="FindWork">FindWork</string>
+    <string name="sign_in">Sign In</string>
+    <string name="blue_collar_jobs">Blue-collar-jobs</string>
+    <string name="Name">Name</string>
+    <string name="Number">Phone</string>
+    <string name="Gbtl">Go back to login.</string>
+    <string name="signin">SIGN IN</string>
+    <string name="signup">SIGN UP</string>
+    <string name="jobs">Jobs</string>
+    <string name="chat">Chat</string>
+</resources>
