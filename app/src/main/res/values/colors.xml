@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="indigo">#FF420690</color>
+    <color name="indigo">#FF002147</color>
+    <color name="oxford_light">#FF154367</color>
     <color name="grey"> #FF808080</color>
 </resources>
