@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         authButton = (Button) findViewById(R.id.authButton);
         newToApp.setOnClickListener(view -> authSwitch());
         authButton.setOnClickListener(view -> doAuth());
+
         //check whether user is already logged in
         checkLoggedIn();
     }
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         Connection.setUserId(userId);
         if(!token.equals("")){
             Intent i = new Intent(this, HomeActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }
     }

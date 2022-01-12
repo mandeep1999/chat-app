@@ -9,6 +9,8 @@ public class Connection {
         Connection.token = token;
     }
 
+
+
     public static String getToken() {
         return token;
     }

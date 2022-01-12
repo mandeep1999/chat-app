@@ -14,4 +14,8 @@
     <string name="jobs">Jobs</string>
     <string name="chat">Chat</string>
     <string name="type_a_message">Type a message</string>
+    <string name="Conversations">Conversations</string>
+    <string name="nothing_yet">Nothing Yet!!</string>
+    <string name="akhilesh">Akhilesh</string>
+    <string name="accountant">Accountant</string>
 </resources>
