@@ -1,7 +1,10 @@
 package co.mandeep_singh.chatapp.Auth;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.telecom.InCallService;
 import android.util.Log;
 import android.view.View;
@@ -34,11 +37,11 @@ import co.mandeep_singh.chatapp.Networking.Connection;
 
 public class Auth {
 
-    Connection connection = new Connection();
+
 
     public void signUp(String name, String number, String password, Activity activity, ProgressBar progressBar) {
         final int[] result = {0};
-        String URL = connection.getApi() + "auth/signup/";
+        String URL = Connection.getApi() + "auth/signup/";
         final  JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("name", name);
@@ -56,12 +59,23 @@ public class Auth {
                 //api call succeeded
                 try {
                     progressBar.setVisibility(View.INVISIBLE);
+
+                    final String token = response.getString("token");
                     final String userId = response.getString("userId");
-                    Log.d("UP SUCCESS", response.toString());
+
+                    SharedPreferences sharedPreferences = activity.getSharedPreferences("AuthDetails", MODE_PRIVATE);
+                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+                    myEdit.putString("token", token);
+                    myEdit.putString("userId", userId);
+                    Connection.setToken(token);
+                    Connection.setUserId(userId);
+                    myEdit.apply();
+
                     Intent intent = new Intent(activity, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     activity.startActivity(intent);
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     Toast.makeText(activity,"Something went wrong!",Toast.LENGTH_LONG).show();
                 }
             }
@@ -90,7 +104,7 @@ public class Auth {
 
     public void signIn(String number, String password, Activity activity, ProgressBar progressBar) {
         final int[] result = {0};
-        String URL = connection.getApi() + "auth/login/";
+        String URL = Connection.getApi() + "auth/login/";
         final  JSONObject jsonObject = new JSONObject();
         try {
 
@@ -108,13 +122,24 @@ public class Auth {
                 //api call succeeded
                 try {
                     progressBar.setVisibility(View.INVISIBLE);
+
+                    final String token = response.getString("token");
                     final String userId = response.getString("userId");
-                    Log.d("LOG IN SUCCESS", response.toString());
+
+                    SharedPreferences sharedPreferences = activity.getSharedPreferences("AuthDetails", MODE_PRIVATE);
+                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+                    myEdit.putString("token", token);
+                    myEdit.putString("userId", userId);
+                    Connection.setToken(token);
+                    Connection.setUserId(userId);
+                    myEdit.apply();
+
                     Intent intent = new Intent(activity, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     activity.startActivity(intent);
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     Toast.makeText(activity,"Something went wrong!",Toast.LENGTH_LONG).show();
                 }
             }
@@ -139,5 +164,7 @@ public class Auth {
 
 
     }
+
+
 
 }

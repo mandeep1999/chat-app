@@ -42,9 +42,12 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         JobModel jobModel = jobsList.get(position);
-        holder.jobTitle.setText(jobModel.getName());
-        holder.jobLocation.setText(jobModel.getLocation());
-        holder.applyBy.setText(jobModel.getLastdate());
+        holder.name.setText(jobModel.getName());
+        holder.jobType.setText(jobModel.getJobType());
+        holder.salary.setText(jobModel.getSalary());
+        holder.userId.setText(jobModel.getUserId());
+        holder.location.setText(jobModel.getLocation());
+        holder.lastdate.setText(jobModel.getLastdate());
     }
 
 
@@ -55,12 +58,15 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView jobTitle, jobLocation, applyBy;
+        TextView name, jobType, location, salary, lastdate, userId;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            jobTitle = itemView.findViewById(R.id.jobTitle);
-            jobLocation = itemView.findViewById(R.id.jobLocation);
-            applyBy = itemView.findViewById(R.id.applyBy);
+            name = itemView.findViewById(R.id.name);
+            location = itemView.findViewById(R.id.location);
+            jobType = itemView.findViewById(R.id.jobType);
+            salary = itemView.findViewById(R.id.salary);
+            lastdate = itemView.findViewById(R.id.lastdate);
+            userId = itemView.findViewById(R.id.userId);
         }
     }
 }

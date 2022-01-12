@@ -14,9 +14,6 @@
             android:name=".ChatScreen"
             android:exported="false" />
         <activity
-            android:name=".JobDescActivity"
-            android:exported="false" />
-        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity

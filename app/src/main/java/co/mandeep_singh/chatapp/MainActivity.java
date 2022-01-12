@@ -3,6 +3,7 @@ package co.mandeep_singh.chatapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import java.util.Objects;
 
 import co.mandeep_singh.chatapp.Auth.Auth;
+import co.mandeep_singh.chatapp.Networking.Connection;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Button authButton;
     public ProgressBar progressBar;
     private boolean signIn = true;
-    private Auth auth = new Auth();
+    private final Auth auth = new Auth();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,20 @@ public class MainActivity extends AppCompatActivity {
         authButton = (Button) findViewById(R.id.authButton);
         newToApp.setOnClickListener(view -> authSwitch());
         authButton.setOnClickListener(view -> doAuth());
+        //check whether user is already logged in
+        checkLoggedIn();
+    }
+
+    private void checkLoggedIn(){
+        SharedPreferences sh = getSharedPreferences("AuthDetails", MODE_PRIVATE);
+        final String token = sh.getString("token","");
+        final String userId = sh.getString("userId", "");
+        Connection.setToken(token);
+        Connection.setUserId(userId);
+        if(!token.equals("")){
+            Intent i = new Intent(this, HomeActivity.class);
+            startActivity(i);
+        }
     }
 
     private void doAuth(){

@@ -17,69 +17,76 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/student_item_photo"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:src="@drawable/logo"
-                app:civ_border_color="@color/indigo"
-                app:civ_border_width="2dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp"
-                app:cardMaxElevation="12dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true"/>
 
 
             <LinearLayout
-                android:layout_width="266dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginTop="15dp"
-
+                android:padding="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 >
 
                 <TextView
-                    android:id="@+id/jobTitle"
-                    android:layout_width="255dp"
+                    android:id="@+id/jobType"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="2dp"
                     android:text="Accountant"
                     android:textAlignment="center"
                     android:textColor="@color/indigo"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AKA Enterprises"
+                    android:textAlignment="center"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/jobLocation"
+                    android:id="@+id/location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Location : Bengaluru"
-                    android:textSize="14sp"
                     android:textAlignment="center"
-                    android:textColor="@color/grey" />
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/applyBy"
+                    android:id="@+id/salary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Apply By : 6 June"
-                    android:textSize="12sp"
+                    android:text="Rs 14000"
                     android:textAlignment="center"
-                    android:textColor="@color/grey" />
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/lastdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="date"
+                    android:textAlignment="center"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/userId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Location : Bengaluru"
+                    android:textAlignment="center"
+                    android:visibility="gone"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
 
-            </LinearLayout>
         </LinearLayout>
+
+
+
 
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
