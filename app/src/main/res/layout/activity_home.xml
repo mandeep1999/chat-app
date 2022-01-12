@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,56 +7,22 @@
     tools:context=".HomeActivity">
 
 
-    <TextView
-        android:id="@+id/jobs"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/curved_top"
-        android:paddingStart="16dp"
-        android:paddingEnd="5dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="25dp"
-        android:text="@string/jobs"
-        android:textColor="@color/white"
-
-        android:textSize="32sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/logout"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="28dp"
-        android:background="@color/indigo"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/jobs"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.899"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_baseline_directions_run_24"
-        app:tint="@color/white"
-        android:contentDescription="@string/app_name"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_navigation"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/jobs_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:paddingBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/jobs"
-        tools:listitem="@layout/job_item"
-        app:layout_constraintVertical_bias="0.0" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation"
+        app:backgroundTint="@color/indigo"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

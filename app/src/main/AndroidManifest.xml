@@ -13,9 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatApp">
         <activity
-            android:name=".ConversationsActivity"
-            android:exported="false" />
-        <activity
             android:name=".ChatScreen"
             android:exported="false" />
         <activity

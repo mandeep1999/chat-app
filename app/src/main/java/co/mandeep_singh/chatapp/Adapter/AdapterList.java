@@ -1,21 +1,15 @@
 package co.mandeep_singh.chatapp.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-
-import co.mandeep_singh.chatapp.ChatScreen;
-import co.mandeep_singh.chatapp.HomeActivity;
 import co.mandeep_singh.chatapp.Model.JobModel;
 import co.mandeep_singh.chatapp.Networking.Connection;
 import co.mandeep_singh.chatapp.R;
@@ -23,25 +17,25 @@ import co.mandeep_singh.chatapp.R;
 public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> {
 
     private List<JobModel> jobsList;
-    private HomeActivity activity;
+    private Context context;
     private OnNoteListener onNoteListener;
 
-    public AdapterList(HomeActivity homeActivity, List<JobModel> JobsList, OnNoteListener onNoteListener){
+    public AdapterList(Context context, List<JobModel> JobsList, OnNoteListener onNoteListener){
         this.jobsList = JobsList;
-        activity = homeActivity;
+        this.context = context;
         this.onNoteListener = onNoteListener;
     }
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.job_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.job_item,parent,false);
         return new MyViewHolder(view,onNoteListener);
     }
 
 
 
     public Context getContext(){
-        return activity;
+        return context;
     }
 
 

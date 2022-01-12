@@ -1,11 +1,15 @@
 package co.mandeep_singh.chatapp;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,36 +24,37 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import co.mandeep_singh.chatapp.Adapter.AdapterList;
 import co.mandeep_singh.chatapp.Adapter.ConversationAdapter;
 import co.mandeep_singh.chatapp.Model.ConversationModel;
-import co.mandeep_singh.chatapp.Model.JobModel;
 import co.mandeep_singh.chatapp.Networking.Connection;
 
-public class ConversationsActivity extends AppCompatActivity implements ConversationAdapter.OnNoteListenerC{
 
+public class ChatsFragment extends Fragment implements ConversationAdapter.OnNoteListenerC{
+
+    View rootView;
     private RecyclerView recyclerView;
     ConversationAdapter adapter;
     ArrayList<ConversationModel> conversationsList = new ArrayList<ConversationModel>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Objects.requireNonNull(getSupportActionBar()).hide();
-        setContentView(R.layout.activity_conversations);
-        recyclerView = (RecyclerView) findViewById(R.id.conversations_list);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        showData();
-    }
 
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rootView = inflater.inflate(R.layout.activity_conversations, container, false);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.conversations_list);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        showData();
+        return rootView;
+    }
     private void showData() {
 
         String URL = Connection.getApi();
         RequestQueue requestQueue;
-        requestQueue = Volley.newRequestQueue(this);
+        requestQueue = Volley.newRequestQueue(getContext());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 URL +"conversation/myconversation/", null, response -> {
@@ -66,11 +71,11 @@ public class ConversationsActivity extends AppCompatActivity implements Conversa
 
                     String firstMember = membersObject.get(0).toString();
                     String secondMember = membersObject.get(0).toString();
-                        if(firstMember.trim().equals(Connection.getUserId().trim()) || secondMember.trim().equals(Connection.getUserId().trim())) {
-                            ConversationModel item = new ConversationModel(firstMember, secondMember);
-                            conversationsList.add(item);
-                            adapter.notifyDataSetChanged();
-                        }
+
+                        ConversationModel item = new ConversationModel(firstMember, secondMember);
+                        conversationsList.add(item);
+                        adapter.notifyDataSetChanged();
+
 
                 }
 
@@ -90,7 +95,7 @@ public class ConversationsActivity extends AppCompatActivity implements Conversa
         };
         requestQueue.add(jsonObjectRequest);
 
-        adapter = new ConversationAdapter(this, conversationsList, this);
+        adapter = new ConversationAdapter(getContext(), conversationsList, this);
         recyclerView.setAdapter(adapter);
     }
 

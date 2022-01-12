@@ -11,32 +11,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import co.mandeep_singh.chatapp.ConversationsActivity;
 import co.mandeep_singh.chatapp.Model.ConversationModel;
 import co.mandeep_singh.chatapp.R;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.MyViewHolder>{
 
     private List<ConversationModel> conversationsList;
-    private ConversationsActivity activity;
+    private Context context;
     private OnNoteListenerC onNoteListenerC;
 
-    public ConversationAdapter(ConversationsActivity conversationsActivity, List<ConversationModel> conversationsList, OnNoteListenerC onNoteListener){
+    public ConversationAdapter(Context context, List<ConversationModel> conversationsList, OnNoteListenerC onNoteListener){
         this.conversationsList = conversationsList;
-        activity = conversationsActivity;
+        this.context = context;
         this.onNoteListenerC = onNoteListenerC;
     }
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.conversation_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.conversation_item,parent,false);
         return new MyViewHolder(view,onNoteListenerC);
     }
 
 
 
     public Context getContext(){
-        return activity;
+        return context;
     }
 
 
