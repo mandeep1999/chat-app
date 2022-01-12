@@ -66,14 +66,23 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
                 for (int i = 0; i < Jarray.length(); i++)
                 {
                     JSONObject jsonObject = Jarray.getJSONObject(i);
-                    JSONArray membersObject = jsonObject.getJSONArray("members");
+                    JSONArray usersArray = jsonObject.getJSONArray("users");
 
+                    String business = jsonObject.getString("business");
 
-                    String firstMember = membersObject.get(0).toString();
-                    String secondMember = membersObject.get(0).toString();
+                    JSONObject user1 = usersArray.getJSONObject(0);
+                    JSONObject user2 = usersArray.getJSONObject(1);
 
-                        ConversationModel item = new ConversationModel(firstMember, secondMember);
+                    String name1 = user1.getString("name");
+                    String name2 = user2.getString("name");
+                    String _id1 = user1.getString("_id");
+                    String _id2 = user2.getString("_id");
+                    String socket1 = user1.getString("socket");
+                    String socket2 = user2.getString("socket");
+
+                        ConversationModel item = new ConversationModel(_id1,_id2,business,socket1,socket2,name1,name2);
                         conversationsList.add(item);
+
                         adapter.notifyDataSetChanged();
 
 
@@ -95,7 +104,7 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
         };
         requestQueue.add(jsonObjectRequest);
 
-        adapter = new ConversationAdapter(getContext(), conversationsList, this);
+        adapter = new ConversationAdapter(getContext(), conversationsList, this::onNoteClickC);
         recyclerView.setAdapter(adapter);
     }
 

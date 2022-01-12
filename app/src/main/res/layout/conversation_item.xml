@@ -50,7 +50,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/toID"
+                    android:id="@+id/chatName"
                     android:layout_width="255dp"
                     android:layout_height="wrap_content"
                     android:padding="2dp"
@@ -65,6 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/accountant"
+                    android:visibility="invisible"
                     android:textSize="18sp"
                     android:textAlignment="center"
                     android:textColor="@color/indigo" />

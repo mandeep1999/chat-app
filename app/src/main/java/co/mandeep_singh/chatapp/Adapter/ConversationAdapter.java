@@ -42,8 +42,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ConversationModel conversationModel = conversationsList.get(position);
-        holder.fromID.setText(conversationModel.getFromID());
-        holder.toID.setText(conversationModel.getToID());
+        holder.chatName.setText(conversationModel.getName1());
 
     }
 
@@ -59,14 +58,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         OnNoteListenerC onNoteListenerC;
-        TextView fromID, toID;
+        TextView chatName;
 
 
         public MyViewHolder(@NonNull View itemView, OnNoteListenerC onNoteListenerC) {
             super(itemView);
             this.onNoteListenerC = onNoteListenerC;
-            fromID = itemView.findViewById(R.id.fromID);
-            toID = itemView.findViewById(R.id.toID);
+            chatName = itemView.findViewById(R.id.chatName);
+
 
             itemView.setOnClickListener(this::onClick);
         }

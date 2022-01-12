@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
         VPadapter vPadapter = new VPadapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         vPadapter.addFragment(new HomeFragment(), "JOBS");
         vPadapter.addFragment(new ChatsFragment(), "CHATS");
-        viewPager.setAdapter((vPadapter));
+        viewPager.setAdapter(vPadapter);
     }
 
     public void setLogOut(){

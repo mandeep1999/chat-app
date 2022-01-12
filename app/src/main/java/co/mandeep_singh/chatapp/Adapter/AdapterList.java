@@ -50,10 +50,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.MyViewHolder> 
         holder.lastdate.setText(jobModel.getLastdate());
         String u1 = jobModel.getUserId().trim();
         String u2 = Connection.getUserId().trim();
-        if(u1.compareTo(u2) == 0 && u1.equalsIgnoreCase(u2) && u2.equals(u1)){
 
-            holder.chatButton.setBackgroundColor(0xFFFFA500);
-        }
     }
 
 
