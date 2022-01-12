@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment implements AdapterList.OnNoteListener
 
     View rootView;
     private RecyclerView recyclerView;
-    private ImageButton logOut;
+
     AdapterList adapter;
     ArrayList<JobModel> jobsList = new ArrayList<JobModel>();
 
@@ -49,10 +49,10 @@ public class HomeFragment extends Fragment implements AdapterList.OnNoteListener
 
         rootView = inflater.inflate(R.layout.fragment_home, container,false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.jobs_list);
-        logOut = (ImageButton) rootView.findViewById(R.id.logout);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        logOut.setOnClickListener(view -> setLogOut());
+
         showData();
         return  rootView;
     }
@@ -109,10 +109,7 @@ public class HomeFragment extends Fragment implements AdapterList.OnNoteListener
     }
 
     //logout user
-    public void setLogOut(){
-        Auth auth = new Auth();
-        auth.signOut(getActivity());
-    }
+
 
     @Override
     public void onNoteClick(int position) {

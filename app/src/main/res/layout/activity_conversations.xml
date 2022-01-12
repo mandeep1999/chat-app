@@ -7,20 +7,6 @@
 
     >
 
-    <TextView
-        android:id="@+id/conversations"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/curved_top"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="25dp"
-        android:text="@string/chats"
-        android:textColor="@color/white"
-        android:textSize="32sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -35,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/conversations"
+        app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/conversation_item" />
 
