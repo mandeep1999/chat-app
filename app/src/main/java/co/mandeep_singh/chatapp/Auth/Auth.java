@@ -166,5 +166,18 @@ public class Auth {
     }
 
 
+    public void signOut(Activity activity){
+        SharedPreferences sharedPreferences = activity.getSharedPreferences("AuthDetails",MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.putString("token", "");
+        myEdit.putString("userId", "");
+        Connection.setUserId("");
+        Connection.setToken("");
+        myEdit.apply();
+        Intent i = new Intent(activity,MainActivity.class);
+        activity.startActivity(i);
+    }
+
+
 
 }

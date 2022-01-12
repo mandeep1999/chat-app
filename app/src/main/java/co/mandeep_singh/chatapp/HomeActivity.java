@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,12 +25,14 @@ import java.util.Map;
 import java.util.Objects;
 
 import co.mandeep_singh.chatapp.Adapter.AdapterList;
+import co.mandeep_singh.chatapp.Auth.Auth;
 import co.mandeep_singh.chatapp.Model.JobModel;
 import co.mandeep_singh.chatapp.Networking.Connection;
 
 public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private ImageButton logOut;
     AdapterList adapter;
     ArrayList<JobModel> jobsList = new ArrayList<JobModel>();
 
@@ -40,8 +43,10 @@ public class HomeActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_home);
         recyclerView = (RecyclerView) findViewById(R.id.jobs_list);
+        logOut = (ImageButton) findViewById(R.id.logout);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        logOut.setOnClickListener(view -> setLogOut());
         showData();
     }
 
@@ -94,6 +99,12 @@ public class HomeActivity extends AppCompatActivity {
 
         adapter = new AdapterList(this, jobsList);
         recyclerView.setAdapter(adapter);
+    }
+
+    //logout user
+    public void setLogOut(){
+        Auth auth = new Auth();
+        auth.signOut(this);
     }
 
 }

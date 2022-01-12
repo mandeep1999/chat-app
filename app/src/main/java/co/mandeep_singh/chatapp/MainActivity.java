@@ -61,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
         String number = Number.getText().toString();
         String password = Password.getText().toString();
 
+        if(number.equals("") || password.equals("")){
+            Toast.makeText(this,"Fields cannot be empty!",Toast.LENGTH_LONG).show();
+            return;
+        }
+
         try {
             if (!signIn && !name.isEmpty() && !number.isEmpty() && !password.isEmpty()) {
                 progressBar.setVisibility(View.VISIBLE);
