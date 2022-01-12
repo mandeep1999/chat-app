@@ -1,5 +1,6 @@
 package co.mandeep_singh.chatapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -30,7 +31,7 @@ import co.mandeep_singh.chatapp.Model.ConversationModel;
 import co.mandeep_singh.chatapp.Networking.Connection;
 
 
-public class ChatsFragment extends Fragment implements ConversationAdapter.OnNoteListenerC{
+public class ChatsFragment extends Fragment implements ConversationAdapter.OnNoteListener{
 
     View rootView;
     private RecyclerView recyclerView;
@@ -61,34 +62,33 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
 
             try {
 
-                JSONArray Jarray  = response.getJSONArray("Conversations");
+                JSONArray conversations  = response.getJSONArray("Conversations");
 
-                for (int i = 0; i < Jarray.length(); i++)
-                {
-                    JSONObject jsonObject = Jarray.getJSONObject(i);
-                    JSONArray usersArray = jsonObject.getJSONArray("users");
+                for(int i = 0; i < conversations.length(); i++ ){
 
-                    String business = jsonObject.getString("business");
+                    JSONObject conversation = conversations.getJSONObject(i);
 
-                    JSONObject user1 = usersArray.getJSONObject(0);
-                    JSONObject user2 = usersArray.getJSONObject(1);
+                    String createdAt = conversation.getString("createdAt");
+                    String _id = conversation.getString("_id");
 
+                    JSONArray users = conversation.getJSONArray("users");
+                    JSONObject user1 = users.getJSONObject(0);
+                    JSONObject user2 = users.getJSONObject(1);
                     String name1 = user1.getString("name");
                     String name2 = user2.getString("name");
-                    String _id1 = user1.getString("_id");
-                    String _id2 = user2.getString("_id");
-                    String socket1 = user1.getString("socket");
-                    String socket2 = user2.getString("socket");
+                    String userId1 = user1.getString("_id");
+                    String userId2 = user2.getString("_id");
 
-                        ConversationModel item = new ConversationModel(_id1,_id2,business,socket1,socket2,name1,name2);
-                        conversationsList.add(item);
+                    JSONObject jobDetails = conversation.getJSONObject("jobDetails");
+                    String jobType = jobDetails.getString("jobType");
 
-                        adapter.notifyDataSetChanged();
-
-
+                    ConversationModel conversationModel = new ConversationModel(_id,userId1,userId2,jobType,name1,name2,createdAt);
+                    conversationsList.add(conversationModel);
+                    adapter.notifyDataSetChanged();
                 }
 
-            } catch (JSONException e) {
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -104,12 +104,14 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
         };
         requestQueue.add(jsonObjectRequest);
 
-        adapter = new ConversationAdapter(getContext(), conversationsList, this::onNoteClickC);
+        adapter = new ConversationAdapter(getContext(), conversationsList, this::onNoteClick);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void onNoteClickC(int position) {
-
+    public void onNoteClick(int position) {
+            Intent i = new Intent(getContext(), ChatScreen.class);
+            i.putExtra("conversationId", conversationsList.get(position).get_id());
+        getContext().startActivity(i);
     }
 }

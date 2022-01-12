@@ -1,7 +1,7 @@
 package co.mandeep_singh.chatapp.Networking;
 
 public class Connection {
-    public static String api = "http://192.168.1.3:3001/";
+    public static String api = "http://192.168.1.5:3001/";
 
     public static String token, userId;
 

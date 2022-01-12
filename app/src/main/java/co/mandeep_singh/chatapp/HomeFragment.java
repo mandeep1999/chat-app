@@ -1,6 +1,5 @@
 package co.mandeep_singh.chatapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,10 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import co.mandeep_singh.chatapp.Adapter.AdapterList;
-import co.mandeep_singh.chatapp.Auth.Auth;
+import co.mandeep_singh.chatapp.Logic.HomeLogic;
 import co.mandeep_singh.chatapp.Model.JobModel;
 import co.mandeep_singh.chatapp.Networking.Connection;
-import co.mandeep_singh.chatapp.R;
 
 
 public class HomeFragment extends Fragment implements AdapterList.OnNoteListener{
@@ -64,7 +61,7 @@ public class HomeFragment extends Fragment implements AdapterList.OnNoteListener
         requestQueue = Volley.newRequestQueue(getContext());
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                URL +"business/", null, response -> {
+                URL +"business/potentialBusiness/", null, response -> {
 
             try {
                 Log.d("myapp", "The response is " + response.getString("message"));
@@ -114,13 +111,9 @@ public class HomeFragment extends Fragment implements AdapterList.OnNoteListener
     @Override
     public void onNoteClick(int position) {
         JobModel jobModel = jobsList.get(position);
-        Intent intent;
-
-            //handle apply for new job
-
-            intent = new Intent(getContext(), ChatScreen.class);
-
-        startActivity(intent);
+        String businessId = jobModel.get_id();
+        HomeLogic.createConversation(businessId,getContext());
 
     }
+
 }

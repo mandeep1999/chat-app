@@ -18,18 +18,18 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
     private List<ConversationModel> conversationsList;
     private Context context;
-    private OnNoteListenerC onNoteListenerC;
+    private OnNoteListener onNoteListener;
 
-    public ConversationAdapter(Context context, List<ConversationModel> conversationsList, OnNoteListenerC onNoteListener){
+    public ConversationAdapter(Context context, List<ConversationModel> conversationsList, OnNoteListener onNoteListener){
         this.conversationsList = conversationsList;
         this.context = context;
-        this.onNoteListenerC = onNoteListenerC;
+        this.onNoteListener = onNoteListener;
     }
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.conversation_item,parent,false);
-        return new MyViewHolder(view,onNoteListenerC);
+        return new MyViewHolder(view,onNoteListener);
     }
 
 
@@ -43,7 +43,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ConversationModel conversationModel = conversationsList.get(position);
         holder.chatName.setText(conversationModel.getName1());
-
+        holder.jobTypeC.setText(conversationModel.getJobType());
     }
 
 
@@ -57,27 +57,27 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        OnNoteListenerC onNoteListenerC;
-        TextView chatName;
+        OnNoteListener onNoteListener;
+        TextView chatName, jobTypeC;
 
 
-        public MyViewHolder(@NonNull View itemView, OnNoteListenerC onNoteListenerC) {
+        public MyViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
-            this.onNoteListenerC = onNoteListenerC;
+            this.onNoteListener = onNoteListener;
             chatName = itemView.findViewById(R.id.chatName);
-
+            jobTypeC = itemView.findViewById(R.id.jobTypeC);
 
             itemView.setOnClickListener(this::onClick);
         }
 
         @Override
         public void onClick(View view) {
-            onNoteListenerC.onNoteClickC(getAdapterPosition());
+            onNoteListener.onNoteClick(getAdapterPosition());
         }
     }
 
-    public interface OnNoteListenerC{
-        void onNoteClickC(int position);
+    public interface OnNoteListener{
+        void onNoteClick(int position);
     }
 
 }
