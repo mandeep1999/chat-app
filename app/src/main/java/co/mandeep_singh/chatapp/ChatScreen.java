@@ -64,6 +64,7 @@ public class ChatScreen extends AppCompatActivity {
     MessagesAdapter adapter;
     ProgressBar progressBar;
     ArrayList<MessageModel> messagesList = new ArrayList<MessageModel>();
+    String conversationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,7 @@ public class ChatScreen extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_chat_screen);
         Intent intent = getIntent();
-        String conversationId = intent.getStringExtra("conversationId");
+        conversationId = intent.getStringExtra("conversationId");
         String receiverId = intent.getStringExtra("receiverId");
          progressBar = (ProgressBar) findViewById(R.id.progressBarChat);
          recyclerView = (RecyclerView) findViewById(R.id.chatRecycleView);
@@ -85,7 +86,7 @@ public class ChatScreen extends AppCompatActivity {
          //socket connect
         mSocket.connect();
         mSocket.emit("addUser", Connection.getUserId());
-       mSocket.on("getMessage", onNewMessage);
+        mSocket.on("getMessage", onNewMessage);
 
     }
 
@@ -166,7 +167,8 @@ public class ChatScreen extends AppCompatActivity {
     public void sendMessage(String conversationId,String receiverId){
         String message = inputMessage.getText().toString().trim();
         HomeLogic.firstMessage(conversationId,receiverId,getApplicationContext(),message);
-        messagesList.add(new MessageModel(message,Connection.getUserId(),conversationId,"test", LocalDateTime.now().toString()));
+        String time = LocalDateTime.now().toString().substring(11,19);
+        messagesList.add(new MessageModel(message,Connection.getUserId(),conversationId,"test", time));
         adapter.notifyDataSetChanged();
         inputMessage.setText("");
     }
@@ -183,7 +185,7 @@ public class ChatScreen extends AppCompatActivity {
                     JSONObject data = (JSONObject) args[0];
 
                     String text;
-                    String sender,conversationId,createdAt,_id;
+                    String sender,conversationID,createdAt,_id;
 
 
                     try {
@@ -191,12 +193,16 @@ public class ChatScreen extends AppCompatActivity {
 
                         text = myMessage.getString("text");
                         sender = myMessage.getString("sender");
-                        conversationId = myMessage.getString("conversationId");
+                        conversationID = myMessage.getString("conversationId");
                         _id = myMessage.getString("_id");
                         createdAt = myMessage.getString("createdAt");
+                        String time = createdAt.toString().substring(11,19);
                         // add the message to view
-                        messagesList.add(new MessageModel(text,sender,conversationId,_id,createdAt));
+
+                        if(conversationId.equals(conversationID)){
+                        messagesList.add(new MessageModel(text,sender,conversationID,_id,time));
                         adapter.notifyDataSetChanged();
+                        }
                     } catch (JSONException e) {
                         Log.d("msg", e.getMessage());
                     }

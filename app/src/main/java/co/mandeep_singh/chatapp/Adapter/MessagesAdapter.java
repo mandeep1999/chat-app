@@ -82,7 +82,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
             void setData(MessageModel messageModel){
                 textMessageSent.setText(messageModel.getText());
-                textDateTimeSent.setText(messageModel.getCreatedAt());
+                String time = messageModel.getCreatedAt().toString().substring(11,19);
+                textDateTimeSent.setText(time);
             }
         }
 
@@ -95,7 +96,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         void setData(MessageModel messageModel){
             textMessageR.setText(messageModel.getText());
-            textDateTimeR.setText(messageModel.getCreatedAt());
+            String time = messageModel.getCreatedAt().toString().substring(11,19);
+            textDateTimeR.setText(time);
         }
     }
 

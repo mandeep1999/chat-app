@@ -30,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
     private boolean signIn = true;
     private final Auth auth = new Auth();
 
-    //socket logic
-    private Socket mSocket;
-    {
-        try {
-            mSocket = IO.socket(Connection.getApi());
-        } catch (URISyntaxException e) {}
-    }
+//    //socket logic
+//    private Socket mSocket;
+//    {
+//        try {
+//            mSocket = IO.socket(Connection.getApi());
+//        } catch (URISyntaxException e) {}
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         //socket
 
 
-        mSocket.connect();
-        mSocket.emit("addUser", Connection.getUserId());
+//        mSocket.connect();
+//        mSocket.emit("addUser", Connection.getUserId());
 
     }
 
