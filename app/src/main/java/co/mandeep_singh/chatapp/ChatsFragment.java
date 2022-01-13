@@ -129,6 +129,7 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
 
         adapter = new ConversationAdapter(getContext(), conversationsList, this::onNoteClick);
         recyclerView.setAdapter(adapter);
+
     }
 
     @Override

@@ -159,6 +159,7 @@ public class ChatScreen extends AppCompatActivity {
         adapter = new MessagesAdapter(this, messagesList);
 
         recyclerView.setAdapter(adapter);
+
     }
 
 
@@ -167,8 +168,8 @@ public class ChatScreen extends AppCompatActivity {
     public void sendMessage(String conversationId,String receiverId){
         String message = inputMessage.getText().toString().trim();
         HomeLogic.firstMessage(conversationId,receiverId,getApplicationContext(),message);
-        String time = LocalDateTime.now().toString().substring(11,19);
-        messagesList.add(new MessageModel(message,Connection.getUserId(),conversationId,"test", time));
+
+        messagesList.add(new MessageModel(message,Connection.getUserId(),conversationId,"test", LocalDateTime.now().toString()));
         adapter.notifyDataSetChanged();
         inputMessage.setText("");
     }
@@ -196,11 +197,11 @@ public class ChatScreen extends AppCompatActivity {
                         conversationID = myMessage.getString("conversationId");
                         _id = myMessage.getString("_id");
                         createdAt = myMessage.getString("createdAt");
-                        String time = createdAt.toString().substring(11,19);
+
                         // add the message to view
 
                         if(conversationId.equals(conversationID)){
-                        messagesList.add(new MessageModel(text,sender,conversationID,_id,time));
+                        messagesList.add(new MessageModel(text,sender,conversationID,_id,createdAt));
                         adapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
