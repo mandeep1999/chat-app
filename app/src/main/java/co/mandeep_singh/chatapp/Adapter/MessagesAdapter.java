@@ -95,7 +95,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         void setData(MessageModel messageModel){
             textMessageR.setText(messageModel.getText());
-            textMessageR.setText(messageModel.getCreatedAt());
+            textDateTimeR.setText(messageModel.getCreatedAt());
         }
     }
 

@@ -99,11 +99,12 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
 
                     JSONObject user = conversation.getJSONObject("users");
                     String name = user.getString("receiverName");
+                    String receiverId = user.getString("receiverId");
 
                     JSONObject jobDetails = conversation.getJSONObject("jobDetails");
                     String jobType = jobDetails.getString("jobType");
 
-                    ConversationModel conversationModel = new ConversationModel(_id,jobType,name,createdAt);
+                    ConversationModel conversationModel = new ConversationModel(_id,jobType,name,createdAt,receiverId);
                     conversationsList.add(conversationModel);
                     adapter.notifyDataSetChanged();
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -134,6 +135,7 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
     public void onNoteClick(int position) {
             Intent i = new Intent(getContext(), ChatScreen.class);
             i.putExtra("conversationId", conversationsList.get(position).get_id());
+            i.putExtra("receiverId", conversationsList.get(position).getReceiverId());
         getContext().startActivity(i);
     }
 

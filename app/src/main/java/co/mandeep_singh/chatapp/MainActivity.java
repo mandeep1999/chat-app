@@ -13,10 +13,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 import co.mandeep_singh.chatapp.Auth.Auth;
 import co.mandeep_singh.chatapp.Networking.Connection;
+import io.socket.client.IO;
+import io.socket.client.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
     public ProgressBar progressBar;
     private boolean signIn = true;
     private final Auth auth = new Auth();
+
+    //socket logic
+    private Socket mSocket;
+    {
+        try {
+            mSocket = IO.socket(Connection.getApi());
+        } catch (URISyntaxException e) {}
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
 
         //check whether user is already logged in
         checkLoggedIn();
+
+        //socket
+
+
+        mSocket.connect();
+        mSocket.emit("addUser", Connection.getUserId());
+
     }
 
     private void checkLoggedIn(){

@@ -59,7 +59,7 @@ public class HomeLogic {
                         return;
                     }
 
-                    firstMessage(conversationId,receiverId,context);
+                    firstMessage(conversationId,receiverId,context, "I want to apply for this job.");
 
 
                 } catch (Exception e) {
@@ -90,13 +90,13 @@ public class HomeLogic {
 
     }
 
-    public static  void firstMessage(String conversationId,String receiverId, Context context){
+    public static  void firstMessage(String conversationId,String receiverId, Context context, String message){
 
         String URL = Connection.getApi() + "message/newmessage/";
         final  JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("conversationId", conversationId);
-            jsonObject.put("text", "I want to apply for this job.");
+            jsonObject.put("text", message);
             jsonObject.put("receiverId", receiverId);
         }
         catch(JSONException e){
