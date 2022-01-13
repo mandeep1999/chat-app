@@ -58,6 +58,8 @@ public class Auth {
             public void onResponse(JSONObject response) {
                 //api call succeeded
                 try {
+
+
                     progressBar.setVisibility(View.INVISIBLE);
 
                     final String token = response.getString("token");
@@ -76,7 +78,7 @@ public class Auth {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     activity.startActivity(intent);
                 } catch (Exception e) {
-                    Toast.makeText(activity,"Something went wrong!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity,e.getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -84,8 +86,15 @@ public class Auth {
             public void onErrorResponse(VolleyError error) {
                 //api call failed
                 progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(activity,"Something went wrong!",Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+
+                try {
+                    String responseBody = new String(error.networkResponse.data, "utf-8");
+                    JSONObject data = new JSONObject(responseBody);
+                    String message = data.getString("message");
+                    Toast.makeText(activity,message,Toast.LENGTH_LONG).show();
+                } catch (JSONException | UnsupportedEncodingException e) {
+                }
+
             }
         }){
             @Override
@@ -115,6 +124,7 @@ public class Auth {
         catch(JSONException e){
             e.printStackTrace();
         }
+        final int[] mStatusCode = new int[1];
 
         final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL,jsonObject, new Response.Listener<JSONObject>() {
             @Override
@@ -148,7 +158,16 @@ public class Auth {
             public void onErrorResponse(VolleyError error) {
                 //api call failed
                 progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(activity,"Something went wrong!",Toast.LENGTH_LONG).show();
+
+                try {
+                    String responseBody = new String(error.networkResponse.data, "utf-8");
+                    JSONObject data = new JSONObject(responseBody);
+                    String message = data.getString("message");
+                    Toast.makeText(activity,message,Toast.LENGTH_LONG).show();
+                } catch (JSONException | UnsupportedEncodingException e) {
+                }
+
+
             }
         }){
             @Override
@@ -157,6 +176,12 @@ public class Auth {
                 final Map<String, String> params = new HashMap<>();
                 params.put("Content-Type","application/json");
                 return params;
+            }
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                mStatusCode[0] = response.statusCode;
+                return super.parseNetworkResponse(response);
             }
         };
 
