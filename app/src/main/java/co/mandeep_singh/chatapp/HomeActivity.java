@@ -48,4 +48,6 @@ public class HomeActivity extends AppCompatActivity {
         Auth auth = new Auth();
         auth.signOut(this);
     }
+
+
 }

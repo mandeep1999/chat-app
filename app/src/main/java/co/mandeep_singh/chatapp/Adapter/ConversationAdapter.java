@@ -42,7 +42,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ConversationModel conversationModel = conversationsList.get(position);
-        holder.chatName.setText(conversationModel.getName1());
+        holder.chatName.setText(conversationModel.getName());
         holder.jobTypeC.setText(conversationModel.getJobType());
     }
 

@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -36,6 +37,8 @@ public class ChatScreen extends AppCompatActivity {
 
 
     private RecyclerView recyclerView;
+    private EditText inputMessage;
+    View sendBtn;
     MessagesAdapter adapter;
     ProgressBar progressBar;
     ArrayList<MessageModel> messagesList = new ArrayList<MessageModel>();
@@ -45,12 +48,15 @@ public class ChatScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_chat_screen);
+        Intent intent = getIntent();
+        String conversationId = intent.getStringExtra("conversationId");
          progressBar = (ProgressBar) findViewById(R.id.progressBarChat);
          recyclerView = (RecyclerView) findViewById(R.id.chatRecycleView);
+         inputMessage = (EditText) findViewById(R.id.inputMessage);
+         sendBtn = findViewById(R.id.sendBtn);
+         sendBtn.setOnClickListener(view->sendMessage(conversationId));
          recyclerView.setHasFixedSize(true);
          recyclerView.setLayoutManager(new LinearLayoutManager(this));
-         Intent intent = getIntent();
-         String conversationId = intent.getStringExtra("conversationId");
          getMyMessages(conversationId);
     }
 
@@ -121,6 +127,18 @@ public class ChatScreen extends AppCompatActivity {
         adapter = new MessagesAdapter(this, messagesList);
 
         recyclerView.setAdapter(adapter);
+    }
+
+
+    //soket
+
+    public void sendMessage(String conversationId){
+        String message = inputMessage.getText().toString().trim();
+        Log.d("msg sent", message);
+    }
+
+    public void receiveMessage(){
+
     }
 
 

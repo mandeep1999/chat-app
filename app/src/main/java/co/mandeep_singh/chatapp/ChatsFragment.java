@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,12 +32,13 @@ import co.mandeep_singh.chatapp.Model.ConversationModel;
 import co.mandeep_singh.chatapp.Networking.Connection;
 
 
-public class ChatsFragment extends Fragment implements ConversationAdapter.OnNoteListener{
+public class ChatsFragment extends Fragment implements ConversationAdapter.OnNoteListener , SwipeRefreshLayout.OnRefreshListener{
 
     View rootView;
     private RecyclerView recyclerView;
     ConversationAdapter adapter;
     ArrayList<ConversationModel> conversationsList = new ArrayList<ConversationModel>();
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
 
 
@@ -49,8 +51,30 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         showData();
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.indigo,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
+
+//        mSwipeRefreshLayout.post(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//
+//                mSwipeRefreshLayout.setRefreshing(true);
+//
+//                // Fetching data from server
+//                showData();
+//            }
+//        });
+
         return rootView;
     }
+
+
     private void showData() {
 
         String URL = Connection.getApi();
@@ -64,32 +88,29 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
 
                 JSONArray conversations  = response.getJSONArray("Conversations");
 
-                for(int i = 0; i < conversations.length(); i++ ){
+                int len = conversations.length();
+
+                for(int i = 0; i < len; i++ ){
 
                     JSONObject conversation = conversations.getJSONObject(i);
 
                     String createdAt = conversation.getString("createdAt");
                     String _id = conversation.getString("_id");
 
-                    JSONArray users = conversation.getJSONArray("users");
-                    JSONObject user1 = users.getJSONObject(0);
-                    JSONObject user2 = users.getJSONObject(1);
-                    String name1 = user1.getString("name");
-                    String name2 = user2.getString("name");
-                    String userId1 = user1.getString("_id");
-                    String userId2 = user2.getString("_id");
+                    JSONObject user = conversation.getJSONObject("users");
+                    String name = user.getString("receiverName");
 
                     JSONObject jobDetails = conversation.getJSONObject("jobDetails");
                     String jobType = jobDetails.getString("jobType");
 
-                    ConversationModel conversationModel = new ConversationModel(_id,userId1,userId2,jobType,name1,name2,createdAt);
+                    ConversationModel conversationModel = new ConversationModel(_id,jobType,name,createdAt);
                     conversationsList.add(conversationModel);
                     adapter.notifyDataSetChanged();
                 }
 
 
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.d("jsonerror",e.getMessage());
             }
 
         }, error -> Log.d("myapp", "Something went wrong")){
@@ -113,5 +134,10 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
             Intent i = new Intent(getContext(), ChatScreen.class);
             i.putExtra("conversationId", conversationsList.get(position).get_id());
         getContext().startActivity(i);
+    }
+
+    @Override
+    public void onRefresh() {
+        showData();
     }
 }

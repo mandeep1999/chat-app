@@ -103,6 +103,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         >
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/sendBtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="4dp"
