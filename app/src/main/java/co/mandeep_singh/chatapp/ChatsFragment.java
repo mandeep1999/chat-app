@@ -106,6 +106,7 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
                     ConversationModel conversationModel = new ConversationModel(_id,jobType,name,createdAt);
                     conversationsList.add(conversationModel);
                     adapter.notifyDataSetChanged();
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
 
 
@@ -138,6 +139,7 @@ public class ChatsFragment extends Fragment implements ConversationAdapter.OnNot
 
     @Override
     public void onRefresh() {
+        conversationsList.clear();
         showData();
     }
 }

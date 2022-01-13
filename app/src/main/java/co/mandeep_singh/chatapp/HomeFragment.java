@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -113,7 +114,7 @@ public class HomeFragment extends Fragment implements AdapterList.OnNoteListener
         JobModel jobModel = jobsList.get(position);
         String businessId = jobModel.get_id();
         HomeLogic.createConversation(businessId,getContext());
-
+        Toast.makeText(getContext(),"Successfully applied", Toast.LENGTH_LONG).show();
     }
 
 }
